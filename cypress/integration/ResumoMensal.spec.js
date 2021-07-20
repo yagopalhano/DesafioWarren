@@ -5,13 +5,12 @@ const dayjs = require('dayjs')
 require('dayjs/locale/pt-br')
 
 
-import { locale } from 'dayjs'
 import loc from '../support/locators'
+import qa from '../support/environments/qa.json'
 
 describe('Testes de movimentação', () => {
     beforeEach(() =>{   
-        cy.visit('https://seubarriga.wcaquino.me/')
-        cy.title().should('be.equal', 'Seu Barriga - Log in')
+        cy.visitarPaginaSeuBarriga()
     })
 
     it('Visualizar resumo do mês atual', function() {
@@ -20,31 +19,31 @@ describe('Testes de movimentação', () => {
         const todaysMonth = dayjs().locale('pt-br').format('MMMM')
         const todaysYear = dayjs().format('YYYY')
 
-        cy.fixture('userData').as('usuario').then(() => {
-            cy.postCriarUsuario(this.usuario.nome, this.usuario.senha, email)
 
-            cy.login(email, this.usuario.senha)
-            cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
+        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
 
-            cy.postCriarConta('Conta de testes')  
+        cy.login(email, qa.env.senha)
+        cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
-            cy.criarMovimentacao('Receita', todaysDate, todaysDate, 'Testes', 
-            this.usuario.nome, '1000', 'Conta de testes', 'pago')
-            cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
+        cy.postCriarConta('Conta de testes')  
 
-            cy.get(loc.HOME.RESUMO_MENSAL).click()
+        cy.criarMovimentacao('Receita', todaysDate, todaysDate, 'Testes', 
+        qa.env.nome, '1000', 'Conta de testes', 'pago')
+        cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
 
-            cy.get(loc.RESUMO_MENSAL.DROPDOWN_MES).select(todaysMonth)
-            cy.get(loc.RESUMO_MENSAL.DROPDOWN_ANO).select(todaysYear)
-            cy.get(loc.RESUMO_MENSAL.BTN_BUSCAR).click()
+        cy.get(loc.HOME.RESUMO_MENSAL).should('be.visible').click()
 
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_DESCRICAO('Teste'))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_DT_PAGAMENTO(todaysDate))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_CONTA('Conta de testes'))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_VALOR('1000.00'))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_SITUACAO('Pago'))
-        })
+        cy.get(loc.RESUMO_MENSAL.DROPDOWN_MES).should('be.visible').select(todaysMonth)
+        cy.get(loc.RESUMO_MENSAL.DROPDOWN_ANO).should('be.visible').select(todaysYear)
+        cy.get(loc.RESUMO_MENSAL.BTN_BUSCAR).should('be.visible').click()
+
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_DESCRICAO('Teste'))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_DT_PAGAMENTO(todaysDate))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_CONTA('Conta de testes'))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_VALOR('1000.00'))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_SITUACAO('Pago'))
     })
+    
 
     it('Visualizar resumo do mês anterior', function() {
         const email = faker.internet.email()      
@@ -53,31 +52,31 @@ describe('Testes de movimentação', () => {
         .locale('pt-br').format('MMMM')
         const todaysYear = dayjs().format('YYYY')
 
-        cy.fixture('userData').as('usuario').then(() => {
-            cy.postCriarUsuario(this.usuario.nome, this.usuario.senha, email)
 
-            cy.login(email, this.usuario.senha)
-            cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
+        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
 
-            cy.postCriarConta('Conta de testes')  
+        cy.login(email, qa.env.senha)
+        cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
-            cy.criarMovimentacao('Receita', subtractedDate, subtractedDate, 'Testes', 
-            this.usuario.nome, '1000', 'Conta de testes', 'pago')
-            cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
+        cy.postCriarConta('Conta de testes')  
 
-            cy.get(loc.HOME.RESUMO_MENSAL).click()
+        cy.criarMovimentacao('Receita', subtractedDate, subtractedDate, 'Testes', 
+        qa.env.nome, '1000', 'Conta de testes', 'pago')
+        cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
 
-            cy.get(loc.RESUMO_MENSAL.DROPDOWN_MES).select(subtractedMonth)
-            cy.get(loc.RESUMO_MENSAL.DROPDOWN_ANO).select(todaysYear)
-            cy.get(loc.RESUMO_MENSAL.BTN_BUSCAR).click()
+        cy.get(loc.HOME.RESUMO_MENSAL).should('be.visible').click()
 
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_DESCRICAO('Teste'))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_DT_PAGAMENTO(subtractedDate))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_CONTA('Conta de testes'))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_VALOR('1000.00'))
-            cy.xpath(loc.RESUMO_MENSAL.CAMPO_SITUACAO('Pago'))
-        })
+        cy.get(loc.RESUMO_MENSAL.DROPDOWN_MES).should('be.visible').select(subtractedMonth)
+        cy.get(loc.RESUMO_MENSAL.DROPDOWN_ANO).should('be.visible').select(todaysYear)
+        cy.get(loc.RESUMO_MENSAL.BTN_BUSCAR).should('be.visible').click()
+
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_DESCRICAO('Teste'))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_DT_PAGAMENTO(subtractedDate))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_CONTA('Conta de testes'))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_VALOR('1000.00'))
+        cy.xpath(loc.RESUMO_MENSAL.CAMPO_SITUACAO('Pago'))
     })
+
 
     it('Apagar conta do resumo mensal', function() {
         const email = faker.internet.email()      
@@ -85,27 +84,27 @@ describe('Testes de movimentação', () => {
         const todaysMonth = dayjs().locale('pt-br').format('MMMM')
         const todaysYear = dayjs().format('YYYY')
 
-        cy.fixture('userData').as('usuario').then(() => {
-            cy.postCriarUsuario(this.usuario.nome, this.usuario.senha, email)
 
-            cy.login(email, this.usuario.senha)
-            cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
+        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
 
-            cy.postCriarConta('Conta de testes')  
+        cy.login(email, qa.env.senha)
+        cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
-            cy.criarMovimentacao('Receita', todaysDate, todaysDate, 'Testes', 
-            this.usuario.nome, '1000', 'Conta de testes', 'pago')
-            cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
+        cy.postCriarConta('Conta de testes')  
 
-            cy.get(loc.HOME.RESUMO_MENSAL).click()
+        cy.criarMovimentacao('Receita', todaysDate, todaysDate, 'Testes', 
+        qa.env.nome, '1000', 'Conta de testes', 'pago')
+        cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
 
-            cy.get(loc.RESUMO_MENSAL.DROPDOWN_MES).select(todaysMonth)
-            cy.get(loc.RESUMO_MENSAL.DROPDOWN_ANO).select(todaysYear)
-            cy.get(loc.RESUMO_MENSAL.BTN_BUSCAR).click()
+        cy.get(loc.HOME.RESUMO_MENSAL).should('be.visible').click()
 
-            cy.get(loc.RESUMO_MENSAL.BTN_APAGAR).click()
-            cy.xpath(loc.ALERT.ALERT('Movimentação removida com sucesso!'))
-        })
+        cy.get(loc.RESUMO_MENSAL.DROPDOWN_MES).should('be.visible').select(todaysMonth)
+        cy.get(loc.RESUMO_MENSAL.DROPDOWN_ANO).should('be.visible').select(todaysYear)
+        cy.get(loc.RESUMO_MENSAL.BTN_BUSCAR).should('be.visible').click()
+
+        cy.get(loc.RESUMO_MENSAL.BTN_APAGAR).should('be.visible').click()
+        cy.xpath(loc.ALERT.ALERT('Movimentação removida com sucesso!'))
+
     })
 
 

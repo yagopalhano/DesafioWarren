@@ -1,4 +1,11 @@
 const locators = {
+    CRIAR_USUARIO: {
+        BTN_NOVO_USUARIO: ':nth-child(2) > a',
+        NOME: '#nome',
+        EMAIL: '#email',
+        SENHA: '#senha',
+        BTN_CADASTRAR: '.btn'
+    },
     LOGIN: {
         EMAIL: '#email',
         SENHA: '#senha',

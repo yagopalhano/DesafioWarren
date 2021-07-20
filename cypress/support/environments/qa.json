@@ -1,0 +1,8 @@
+{
+    "baseUrl": "https://seubarriga.wcaquino.me",
+    "env": {
+        "senha": "senhaTeste",
+        "senhaIncorreta": "senhaIncorreta",
+        "nome": "Usuário de testes"
+    }
+}
