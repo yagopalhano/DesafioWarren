@@ -3,19 +3,17 @@
 var faker = require('faker-br');
 
 import loc from '../support/locators'
-import qa from '../support/environments/qa.json'
 
 describe('Testes de contas', () => {
     beforeEach(() =>{   
         cy.visitarPaginaSeuBarriga()
+        global.email = faker.internet.email()
     })
 
     it('Criar uma conta na aplicação com sucesso', function() {
-        const email = faker.internet.email()
+        cy.postCriarUsuario(Cypress.env('nome'), Cypress.env('senha'), email)
 
-        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
-
-        cy.login(email, qa.env.senha)
+        cy.login(email, Cypress.env('senha'))
         cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
         
         cy.get(loc.HOME.CONTAS).should('be.visible').click()
@@ -28,11 +26,9 @@ describe('Testes de contas', () => {
     })
 
     it('Tentar criar uma conta com o mesmo nome de uma existente', function() {
-        const email = faker.internet.email()
-
-        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
+        cy.postCriarUsuario(Cypress.env('nome'), Cypress.env('senha'), email)
         
-        cy.login(email, qa.env.senha)
+        cy.login(email, Cypress.env('senha'))
         cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
         cy.postCriarConta('Conta de testes')
@@ -45,11 +41,9 @@ describe('Testes de contas', () => {
     })
 
     it('Listar uma conta na aplicação com sucesso', function() {
-        const email = faker.internet.email()
-
-        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
+        cy.postCriarUsuario(Cypress.env('nome'), Cypress.env('senha'), email)
         
-        cy.login(email, qa.env.senha)
+        cy.login(email, Cypress.env('senha'))
         cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
         
         cy.postCriarConta('Conta de testes')

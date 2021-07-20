@@ -6,29 +6,29 @@ require('dayjs/locale/pt-br')
 
 
 import loc from '../support/locators'
-import qa from '../support/environments/qa.json'
+
 
 describe('Testes de movimentação', () => {
     beforeEach(() =>{   
         cy.visitarPaginaSeuBarriga()
+        global.email = faker.internet.email()   
     })
 
-    it('Visualizar resumo do mês atual', function() {
-        const email = faker.internet.email()      
+    it('Visualizar resumo do mês atual', function() {     
         const todaysDate = dayjs().format('DD/MM/YYYY')
         const todaysMonth = dayjs().locale('pt-br').format('MMMM')
         const todaysYear = dayjs().format('YYYY')
 
 
-        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
+        cy.postCriarUsuario(Cypress.env('nome'), Cypress.env('senha'), email)
 
-        cy.login(email, qa.env.senha)
+        cy.login(email, Cypress.env('senha'))
         cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
         cy.postCriarConta('Conta de testes')  
 
         cy.criarMovimentacao('Receita', todaysDate, todaysDate, 'Testes', 
-        qa.env.nome, '1000', 'Conta de testes', 'pago')
+        Cypress.env('nome'), '1000', 'Conta de testes', 'pago')
         cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
 
         cy.get(loc.HOME.RESUMO_MENSAL).should('be.visible').click()
@@ -45,23 +45,22 @@ describe('Testes de movimentação', () => {
     })
     
 
-    it('Visualizar resumo do mês anterior', function() {
-        const email = faker.internet.email()      
+    it('Visualizar resumo do mês anterior', function() {     
         const subtractedDate = dayjs().subtract(1, 'month').format('DD/MM/YYYY')
         const subtractedMonth = dayjs().subtract(1, 'month')
         .locale('pt-br').format('MMMM')
         const todaysYear = dayjs().format('YYYY')
 
 
-        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
+        cy.postCriarUsuario(Cypress.env('nome'), Cypress.env('senha'), email)
 
-        cy.login(email, qa.env.senha)
+        cy.login(email, Cypress.env('senha'))
         cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
         cy.postCriarConta('Conta de testes')  
 
         cy.criarMovimentacao('Receita', subtractedDate, subtractedDate, 'Testes', 
-        qa.env.nome, '1000', 'Conta de testes', 'pago')
+        Cypress.env('nome'), '1000', 'Conta de testes', 'pago')
         cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
 
         cy.get(loc.HOME.RESUMO_MENSAL).should('be.visible').click()
@@ -78,22 +77,21 @@ describe('Testes de movimentação', () => {
     })
 
 
-    it('Apagar conta do resumo mensal', function() {
-        const email = faker.internet.email()      
+    it('Apagar conta do resumo mensal', function() {     
         const todaysDate = dayjs().format('DD/MM/YYYY')
         const todaysMonth = dayjs().locale('pt-br').format('MMMM')
         const todaysYear = dayjs().format('YYYY')
 
 
-        cy.postCriarUsuario(qa.env.nome, qa.env.senha, email)
+        cy.postCriarUsuario(Cypress.env('nome'), Cypress.env('senha'), email)
 
-        cy.login(email, qa.env.senha)
+        cy.login(email, Cypress.env('senha'))
         cy.xpath(loc.ALERT.ALERT('Bem vindo, Usuário de testes'))
 
         cy.postCriarConta('Conta de testes')  
 
         cy.criarMovimentacao('Receita', todaysDate, todaysDate, 'Testes', 
-        qa.env.nome, '1000', 'Conta de testes', 'pago')
+        Cypress.env('nome'), '1000', 'Conta de testes', 'pago')
         cy.xpath(loc.ALERT.ALERT('Movimentação adicionada com sucesso!'))
 
         cy.get(loc.HOME.RESUMO_MENSAL).should('be.visible').click()
