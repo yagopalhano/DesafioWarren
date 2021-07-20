@@ -11,7 +11,7 @@ Cypress.Commands.add('login', (email, senha) => {
 
 
 Cypress.Commands.add('visitarPaginaSeuBarriga', () => {
-    cy.visit('https://seubarriga.wcaquino.me/')
+    cy.visit('/')
     cy.title().should('be.equal', 'Seu Barriga - Log in')
 })
 
