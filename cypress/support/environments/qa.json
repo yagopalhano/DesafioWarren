@@ -1,5 +1,6 @@
 {
     "baseUrl": "https://seubarriga.wcaquino.me",
+    "apiurl": "",
     "env": {
         "senha": "senhaTeste",
         "senhaIncorreta": "senhaIncorreta",
