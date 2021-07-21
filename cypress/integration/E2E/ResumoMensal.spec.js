@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 
-var faker = require('faker-br')
-const dayjs = require('dayjs')
+import faker from 'faker-br'
+import dayjs from 'dayjs'
 require('dayjs/locale/pt-br')
 
 

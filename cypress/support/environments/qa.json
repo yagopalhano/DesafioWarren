@@ -1,9 +1,10 @@
 {
     "baseUrl": "https://seubarriga.wcaquino.me",
-    "apiurl": "",
+    "apiUrl": "https://barrigarest.wcaquino.me",
     "env": {
         "senha": "senhaTeste",
         "senhaIncorreta": "senhaIncorreta",
-        "nome": "Usuário de testes"
+        "nome": "Usuário de testes",
+        "nome_conta": "Conta de teste"
     }
 }

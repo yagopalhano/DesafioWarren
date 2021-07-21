@@ -1,6 +1,6 @@
 /// <reference types="cypress"/>
 
-var faker = require('faker-br');
+import faker from 'faker-br'
 
 import loc from '../../support/locators'
 
