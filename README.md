@@ -2,6 +2,36 @@
   Testes E2E e API com Cypress
 </h1>
 
+<h3 align="left">Pré-requisitos</h3>
+
+<li>Instale o Node.js: https://nodejs.org/en/download/ </li>
+<li>Após instalar, execute o comando abaixo na pasta do projeto:</li>
+<p align="justify">
+  <pre>npm install</pre>
+</p>
+<hr>
+
+<h3 align="left">Comandos para executar os testes</h3>
+<h4 align="left">Testes E2E</h4>
+
+<p align="justify">
+  <pre>npm run regression-test:e2e:qa</pre>
+</p>
+
+<h4 align="left">Testes API</h4>
+
+<p align="justify">
+  <pre>npm run regression-test:api:qa</pre>
+</p>
+
+<h4 align="left">Todos os testes</h4>
+
+<p align="justify">
+  <pre>npm run regression-test:full:qa</pre>
+</p>
+<hr>
+
+<h3 align="left">Estrutura do projeto</h3>
 
 ```
 DesafioWarren
