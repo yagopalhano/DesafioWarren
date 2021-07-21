@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cy:open": "cypress open",
-    "regression-test:e2e:qa": "npm install; npx cypress run --env configFile=qa --spec './cypress/integration/E2E/**'"
+    "regression-test:e2e:qa": "npx cypress run --env configFile=qa --spec './cypress/integration/E2E/**'",
+    "regression-test:api:qa": "npx cypress run --env configFile=qa --spec './cypress/integration/API/**'",
+    "regression-test:full:qa": "npx cypress run --env configFile=qa --spec './cypress/integration/**'"
   },
   "keywords": [],
   "author": "",
